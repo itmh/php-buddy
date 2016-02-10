@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="build">
+
+    <property name="build.dir" value="./build"/>
+    <property name="build.bin" value="./vendor/bin"/>
+
+    <property name="build.argsSpace" value="./controllers ./components ./helpers ./models ./tests ./web"/>
+    <property name="build.argsComma" value="./controllers,./components,./helpers,./models,./tests,./web"/>
+    <property name="build.argsWimc" value="./tests ./models"/>
+
+    <target name="build" depends="clean,lint,phpcs,phpcpd,pdepend,phploc,wimc,test,phpcb"
+            description="Запуск тестов и инструментов анализа">
+    </target>
+
+    <target name="clean" hidden="true"
+            description="Очистка рабочей директории от устаревших артефактов">
+        <delete dir="${build.dir}/phpcs"/>
+        <delete dir="${build.dir}/phpcpd"/>
+        <delete dir="${build.dir}/phpmd"/>
+        <delete dir="${build.dir}/pdepend"/>
+        <delete dir="${build.dir}/phploc"/>
+        <delete dir="${build.dir}/phpcb"/>
+        <delete dir="${build.dir}/wimc"/>
+        <delete dir="${build.dir}/test"/>
+    </target>
+
+    <target name="init" depends="" hidden="true"
+            description="Инициализация окружения для сборки">
+        <mkdir dir="${build.dir}/phpcs"/>
+        <mkdir dir="${build.dir}/phpcpd"/>
+        <mkdir dir="${build.dir}/phpmd"/>
+        <mkdir dir="${build.dir}/pdepend"/>
+        <mkdir dir="${build.dir}/phploc"/>
+        <mkdir dir="${build.dir}/phpcb"/>
+        <mkdir dir="${build.dir}/wimc"/>
+        <mkdir dir="${build.dir}/test"/>
+    </target>
+
+    <target name="lint" depends="init"
+            description="Проверка исходных файлов на корректность синтаксиса">
+        <exec passthru="true"
+              command="${build.dir}/parallel-lint ${build.argsSpace} --exclude vendor"/>
+    </target>
+
+    <target name="phpcs" depends="init"
+            description="Проверка исходных файлов на соответствие стилю">
+        <exec passthru="true"
+              command="
+              ${build.dir}/phpcs ${build.argsSpace}
+              --report-checkstyle=${build.dir}/phpcs/report.xml
+              --encoding=UTF-8
+              --standard=./vendor/itmh/coding-standard-php/ITMH
+              --extensions=php
+              --report-summary
+              --report-width=auto
+              "/>
+    </target>
+
+    <target name="phpcpd" depends="init"
+            description="Поиск дубликатов кода">
+        <exec passthru="true"
+              command="
+              ${build.dir}/phpcpd ${build.argsSpace}
+              --log-pmd ${build.dir}/phpcpd/report.xml
+              --exclude=vendor
+              "/>
+    </target>
+
+    <target name="phpmd" depends="init"
+            description="Проверка файлов на наличие грязного кода">
+        <exec passthru="true"
+              command="
+              ${build.dir}/phpmd ${build.argsComma}
+              xml cleancode,codesize,controversial,design,naming,unusedcode
+              --reportfile ${build.dir}/phpmd/report.xml
+              --exclude vendor
+              "/>
+    </target>
+
+    <target name="pdepend" depends="init"
+            description="Вычисление зависимостей в коде">
+        <exec passthru="true"
+              command="
+              ${build.dir}/pdepend
+              --suffix=php
+              --summary-xml=${build.dir}/pdepend/report.xml
+              --jdepend-xml=${build.dir}/pdepend/jdepend.xml
+              --jdepend-chart=${build.dir}/pdepend/jdepend-chart.svg
+              --overview-pyramid=${build.dir}/pdepend/overview-pyramid.svg
+              --ignore=vendor,test,tests
+              ${build.argsComma}
+              "/>
+    </target>
+
+    <target name="phploc" depends="init"
+            description="Подсчёт размера проекта">
+        <exec passthru="true"
+              command="
+              ${build.dir}/phploc
+              --log-xml=${build.dir}/phploc/report.xml
+              --exclude=vendor
+              --exclude=test
+              --exclude=tests
+              --
+               ${build.argsSpace}
+              "
+        />
+    </target>
+
+    <target name="wimc" depends="init"
+            description="Проверка соответсвия тестов и цикломатической сложности">
+        <exec passthru="true"
+              command="
+              ${build.dir}/wimc {$build.argsWimc}
+              --tmp=${build.dir}/wimc
+              "
+        />
+    </target>
+
+    <target name="test" depends="init"
+            description="Запуск тестов и подсчёт покрытия">
+        <exec passthru="true"
+              command="
+              ${build.dir}/phpunit
+              --coverage-clover=${build.dir}/test/coverage.xml
+              --testdox-text=${build.dir}/test/results.txt
+              "
+        />
+    </target>
+
+    <target name="phpcb" depends="init"
+            description="PHP Code Browser">
+        <exec passthru="true"
+              command="
+              ${build.dir}/phpcb
+              --extensions=php
+              --log=${build.dir}
+              --output=${build.dir}/phpcb
+              "
+        />
+    </target>
+</project>

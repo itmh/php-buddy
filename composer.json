@@ -1,0 +1,30 @@
+{
+  "name": "itmh/php-buddy",
+  "description": "Пакет необходимых инструментов анализа и тестирования php кода",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Chshanovskiy Maxim",
+      "email": "chshanovskiy.maxim@gmail.com"
+    }
+  ],
+  "require": {
+    "phing/phing": "^2.13",
+    "jakub-onderka/php-parallel-lint": "^0.9.2",
+    "phpmd/phpmd": "^2.3",
+    "pdepend/pdepend": "^2.2",
+    "phploc/phploc": "^3.0",
+    "sebastian/phpcpd": "^2.0",
+    "squizlabs/php_codesniffer": "^2.5",
+    "itmh/coding-standard-php": "^0.1.0",
+    "mayflower/php-codebrowser": "^1.1",
+    "itmh/where-is-my-coverage": "^1.2",
+    "phpunit/phpunit": "^5.2"
+  },
+  "scripts": {
+    "post-package-install": [
+      "php -r \"copy('build.xml', 'build.xml.buddy');copy('phpunit.xml', 'phpunit.xml.buddy');\""
+    ]
+  }
+}
