@@ -13,7 +13,7 @@
 
   },
   "scripts": {
-    "post-package-install": [
+    "post-install-cmd": [
       "php -r \"copy('build.xml', 'build.xml.buddy');copy('phpunit.xml', 'phpunit.xml.buddy');\""
     ]
   }
