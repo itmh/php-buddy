@@ -131,7 +131,7 @@
               checkreturn="true"
               executable="${build.bin}/phpunit">
             <arg line="--coverage-clover=${build.dir}/test/coverage.xml"/>
-            <arg line="--testdox-text=${build.dir}/test/results.txt"/>
+            <arg line="--log-junit=${build.dir}/test/junit.xml"/>
         </exec>
     </target>
 
