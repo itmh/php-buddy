@@ -6,10 +6,10 @@
 
     <property name="build.argsSpace" value="src web test"/>
     <property name="build.argsComma" value="src,web,test"/>
-    <property name="build.argsWimc" value="test src"/>
+    <property name="build.argsCyclophp" value="src"/>
 
     <target name="build"
-            depends="clean,lint,phpcs,phpcpd,pdepend,phploc,wimc,test,phpcb"
+            depends="clean,lint,phpcs,phpcpd,pdepend,phploc,cyclophp,test,phpcb"
             description="Запуск тестов и инструментов анализа">
     </target>
 
@@ -21,7 +21,6 @@
         <delete dir="${build.dir}/pdepend"/>
         <delete dir="${build.dir}/phploc"/>
         <delete dir="${build.dir}/phpcb"/>
-        <delete dir="${build.dir}/wimc"/>
         <delete dir="${build.dir}/test"/>
     </target>
 
@@ -33,7 +32,6 @@
         <mkdir dir="${build.dir}/pdepend"/>
         <mkdir dir="${build.dir}/phploc"/>
         <mkdir dir="${build.dir}/phpcb"/>
-        <mkdir dir="${build.dir}/wimc"/>
         <mkdir dir="${build.dir}/test"/>
     </target>
 
@@ -115,13 +113,15 @@
         </exec>
     </target>
 
-    <target name="wimc" depends="init"
-            description="Проверка соответсвия тестов и цикломатической сложности">
+    <target name="cyclophp" depends="init"
+            description="Поиск методов с самой больщой цикломатической сложностью">
         <exec passthru="true"
               checkreturn="true"
-              executable="${build.bin}/wimc">
-            <arg line="${build.argsWimc}"/>
-            <arg line="--tmp=${build.dir}/wimc"/>
+              executable="${build.bin}/cyclophp run">
+            <arg line="${build.argsCyclophp}"/>
+            <arg line="--exclude=vendor"/>
+            <arg line="--exclude=test"/>
+            <arg line="--exclude=tests"/>
         </exec>
     </target>
 

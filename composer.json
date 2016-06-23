@@ -19,7 +19,7 @@
     "squizlabs/php_codesniffer": "^2.5",
     "itmh/coding-standard-php": "^0.1.0",
     "mayflower/php-codebrowser": "^1.1",
-    "itmh/where-is-my-coverage": "^1.2",
+    "itmh/cyclophp": "^1.0",
     "phpunit/phpunit": "^5.2"
   }
 }
