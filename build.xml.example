@@ -78,7 +78,7 @@
               checkreturn="true"
               executable="${build.bin}/phpmd">
             <arg line="${build.argsComma}"/>
-            <arg line="xml cleancode,codesize,controversial,design,naming,unusedcode"/>
+            <arg line="xml ./vendor/itmh/coding-standard-php/phpmd/ruleset.xml"/>
             <arg line="--reportfile ${build.dir}/phpmd/report.xml"/>
             <arg line="--exclude vendor"/>
         </exec>

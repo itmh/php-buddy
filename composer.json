@@ -17,7 +17,7 @@
     "phploc/phploc": "^3.0",
     "sebastian/phpcpd": "^2.0",
     "squizlabs/php_codesniffer": "^2.5",
-    "itmh/coding-standard-php": "^0.1.0",
+    "itmh/coding-standard-php": "1.0.*",
     "mayflower/php-codebrowser": "^1.1",
     "itmh/cyclophp": "^1.0",
     "phpunit/phpunit": "^5.2"

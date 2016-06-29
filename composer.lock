@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6c17e7759d6e46056a4f2e5a3690707f",
-    "content-hash": "8dc1d4cc821eb32ea380cc5b32f64170",
+    "hash": "233f93611e0e8fc58ebd92f7fd23fff5",
+    "content-hash": "90843dd496e88962ff4eb4ecb468b49a",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -63,20 +63,21 @@
         },
         {
             "name": "itmh/coding-standard-php",
-            "version": "v0.1.2",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/itmh/coding-standard-php.git",
-                "reference": "349fe8036bca2179298c5e5a0ce7efb33dbd55ed"
+                "reference": "ef2d1e0966dfb58c6e88c5aacab199fbff1bb880"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/itmh/coding-standard-php/zipball/349fe8036bca2179298c5e5a0ce7efb33dbd55ed",
-                "reference": "349fe8036bca2179298c5e5a0ce7efb33dbd55ed",
+                "url": "https://api.github.com/repos/itmh/coding-standard-php/zipball/ef2d1e0966dfb58c6e88c5aacab199fbff1bb880",
+                "reference": "ef2d1e0966dfb58c6e88c5aacab199fbff1bb880",
                 "shasum": ""
             },
             "require-dev": {
-                "squizlabs/php_codesniffer": "~2.5"
+                "phpmd/phpmd": "^2.4",
+                "squizlabs/php_codesniffer": "^2.5"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -89,21 +90,21 @@
                     "email": "chshanovskiy.maxim@itmh.ru"
                 }
             ],
-            "description": "ITMH PHP_CodeSniffer standard",
-            "time": "2016-03-16 08:36:08"
+            "description": "ITMH coding standards",
+            "time": "2016-06-29 08:01:36"
         },
         {
             "name": "itmh/cyclophp",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/itmh/cyclophp.git",
-                "reference": "6d76550192585752a5391d81d41aa5ee2e02bd39"
+                "reference": "cf11a94fb001252d4ba6ab3fbd5e605817f51e0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/itmh/cyclophp/zipball/6d76550192585752a5391d81d41aa5ee2e02bd39",
-                "reference": "6d76550192585752a5391d81d41aa5ee2e02bd39",
+                "url": "https://api.github.com/repos/itmh/cyclophp/zipball/cf11a94fb001252d4ba6ab3fbd5e605817f51e0b",
+                "reference": "cf11a94fb001252d4ba6ab3fbd5e605817f51e0b",
                 "shasum": ""
             },
             "require": {
@@ -131,7 +132,7 @@
                 }
             ],
             "description": "Инструмент для подсчёта цикломатики публичных методов",
-            "time": "2016-06-23 11:28:39"
+            "time": "2016-06-23 12:37:32"
         },
         {
             "name": "jakub-onderka/php-parallel-lint",
