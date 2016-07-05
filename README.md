@@ -11,5 +11,27 @@
 * https://github.com/sebastianbergmann/phpcpd
 * https://github.com/squizlabs/PHP_CodeSniffer
 * https://github.com/itmh/coding-standard-php
-* https://github.com/itmh/where-is-my-coverage
+* https://github.com/itmh/cyclophp
 * https://github.com/mayflower/PHP_CodeBrowser
+
+### Установка
+
+После установки пакета, следует скопировать файл `build.xml.example` в корень проекта и настроить под свои требования. Также необходимо добавить секцию `scripts` в свой `composer.json`:
+```
+"scripts": {
+  "build": "./vendor/bin/phing build",
+  "build:strict": "BUILD_STRICT=1 ./vendor/bin/phing build",
+  "test": "./vendor/bin/phing test"
+}
+```
+А также добавить хук на пуш для гита:
+```shell
+cat > .git/hooks/pre-push << EOF
+#!/bin/sh
+composer build:strict
+EOF
+```
+И убедиться что у него есть права на запуск
+```shell
+chmod +x .git/hooks/pre-push
+```

@@ -3,6 +3,7 @@
 
     <property name="build.dir" value="./build"/>
     <property name="build.bin" value="./bin"/>
+    <property name="build.strict" value="0"/>
 
     <property name="build.argsSpace" value="src web test"/>
     <property name="build.argsComma" value="src,web,test"/>
@@ -33,12 +34,19 @@
         <mkdir dir="${build.dir}/phploc"/>
         <mkdir dir="${build.dir}/phpcb"/>
         <mkdir dir="${build.dir}/test"/>
+
+        <if>
+            <equals arg1="${env.BUILD_STRICT}" arg2="1"/>
+            <then>
+                <property name="build.strict" value="1"/>
+            </then>
+        </if>
     </target>
 
     <target name="lint" depends="init"
             description="Проверка исходных файлов на корректность синтаксиса">
         <exec passthru="true"
-              checkreturn="true"
+              checkreturn="${build.strict}"
               executable="${build.bin}/parallel-lint">
             <arg line="${build.argsSpace}"/>
             <arg line="--exclude vendor"/>
@@ -48,7 +56,7 @@
     <target name="phpcs" depends="init"
             description="Проверка исходных файлов на соответствие стилю">
         <exec passthru="true"
-              checkreturn="true"
+              checkreturn="${build.strict}"
               executable="${build.bin}/phpcs">
             <arg line="${build.argsSpace}"/>
             <arg line="--report-checkstyle=${build.dir}/phpcs/report.xml"/>
@@ -64,7 +72,7 @@
     <target name="phpcpd" depends="init"
             description="Поиск дубликатов кода">
         <exec passthru="true"
-              checkreturn="true"
+              checkreturn="false"
               executable="${build.bin}/phpcpd">
             <arg line="${build.argsSpace}"/>
             <arg line="--log-pmd ${build.dir}/phpcpd/report.xml"/>
@@ -75,7 +83,7 @@
     <target name="phpmd" depends="init"
             description="Проверка файлов на наличие грязного кода">
         <exec passthru="true"
-              checkreturn="true"
+              checkreturn="${build.strict}"
               executable="${build.bin}/phpmd">
             <arg line="${build.argsComma}"/>
             <arg line="xml ./vendor/itmh/coding-standard-php/phpmd/ruleset.xml"/>
@@ -87,7 +95,7 @@
     <target name="pdepend" depends="init"
             description="Вычисление зависимостей в коде">
         <exec passthru="true"
-              checkreturn="true"
+              checkreturn="${build.strict}"
               executable="${build.bin}/pdepend">
             <arg line="--suffix=php"/>
             <arg line="--summary-xml=${build.dir}/pdepend/report.xml"/>
@@ -102,7 +110,7 @@
     <target name="phploc" depends="init"
             description="Подсчёт размера проекта">
         <exec passthru="true"
-              checkreturn="true"
+              checkreturn="${build.strict}"
               executable="${build.bin}/phploc">
             <arg line="--log-xml=${build.dir}/phploc/report.xml"/>
             <arg line="--exclude=vendor"/>
@@ -116,7 +124,7 @@
     <target name="cyclophp" depends="init"
             description="Поиск методов с самой больщой цикломатической сложностью">
         <exec passthru="true"
-              checkreturn="true"
+              checkreturn="${build.strict}"
               executable="${build.bin}/cyclophp run">
             <arg line="${build.argsCyclophp}"/>
             <arg line="--exclude=vendor"/>
@@ -128,7 +136,7 @@
     <target name="test" depends="init"
             description="Запуск тестов и подсчёт покрытия">
         <exec passthru="true"
-              checkreturn="true"
+              checkreturn="${build.strict}"
               executable="${build.bin}/phpunit">
             <arg line="--coverage-clover=${build.dir}/test/coverage.xml"/>
             <arg line="--log-junit=${build.dir}/test/junit.xml"/>
@@ -138,7 +146,7 @@
     <target name="phpcb" depends="init"
             description="PHP Code Browser">
         <exec passthru="true"
-              checkreturn="true"
+              checkreturn="${build.strict}"
               executable="${build.bin}/phpcb">
             <arg line="--extensions=php"/>
             <arg line="--log=${build.dir}"/>
