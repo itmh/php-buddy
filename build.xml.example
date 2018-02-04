@@ -2,12 +2,12 @@
 <project basedir="." default="build" name="phing">
 
     <property name="build.dir" value="./build"/>
-    <property name="build.bin" value="./bin"/>
+    <property name="build.bin" value="vendor/bin"/>
     <property name="build.strict" value="0"/>
 
-    <property name="build.argsSpace" value="src web test"/>
-    <property name="build.argsComma" value="src,web,test"/>
-    <property name="build.argsCyclophp" value="src"/>
+    <property name="build.argsSpace" value="app tests"/>
+    <property name="build.argsComma" value="app,tests"/>
+    <property name="build.argsCyclophp" value="app"/>
 
     <target name="build"
             depends="clean,lint,phpcs,phpcpd,pdepend,phploc,cyclophp,test,phpcb"
@@ -61,7 +61,7 @@
             <arg line="${build.argsSpace}"/>
             <arg line="--report-checkstyle=${build.dir}/phpcs/report.xml"/>
             <arg line="--encoding=UTF-8"/>
-            <arg line="--standard=./vendor/itmh/coding-standard-php/ITMH"/>
+            <arg line="--standard=vendor/itmh/coding-standard-php/phpcs/ITMH"/>
             <arg line="--extensions=php"/>
             <arg line="--report-summary"/>
             <arg line="--report-width=auto"/>
@@ -86,7 +86,7 @@
               checkreturn="${build.strict}"
               executable="${build.bin}/phpmd">
             <arg line="${build.argsComma}"/>
-            <arg line="xml ./vendor/itmh/coding-standard-php/phpmd/ruleset.xml"/>
+            <arg line="xml vendor/itmh/coding-standard-php/phpmd/ruleset.xml"/>
             <arg line="--reportfile ${build.dir}/phpmd/report.xml"/>
             <arg line="--exclude vendor"/>
         </exec>
@@ -122,10 +122,11 @@
     </target>
 
     <target name="cyclophp" depends="init"
-            description="Поиск методов с самой больщой цикломатической сложностью">
+            description="Поиск методов с самой большой цикломатической сложностью">
         <exec passthru="true"
               checkreturn="${build.strict}"
-              executable="${build.bin}/cyclophp run">
+              executable="${build.bin}/cyclophp">
+            <arg line="run"/>
             <arg line="${build.argsCyclophp}"/>
             <arg line="--exclude=vendor"/>
             <arg line="--exclude=test"/>
