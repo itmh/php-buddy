@@ -10,7 +10,7 @@
     <property name="build.argsCyclophp" value="app"/>
 
     <target name="build"
-            depends="clean,lint,phpcs,phpcpd,pdepend,phploc,cyclophp,test,phpcb"
+            depends="clean,lint,phpcs,phpcpd,pdepend,phploc,cyclophp,phpstan,test,phpcb"
             description="Запуск тестов и инструментов анализа">
     </target>
 
@@ -22,6 +22,7 @@
         <delete dir="${build.dir}/pdepend"/>
         <delete dir="${build.dir}/phploc"/>
         <delete dir="${build.dir}/phpcb"/>
+        <delete dir="${build.dir}/phpstan"/>
         <delete dir="${build.dir}/test"/>
     </target>
 
@@ -33,6 +34,7 @@
         <mkdir dir="${build.dir}/pdepend"/>
         <mkdir dir="${build.dir}/phploc"/>
         <mkdir dir="${build.dir}/phpcb"/>
+        <mkdir dir="${build.dir}/phpstan"/>
         <mkdir dir="${build.dir}/test"/>
 
         <if>
@@ -132,6 +134,17 @@
             <arg line="--exclude=test"/>
             <arg line="--exclude=tests"/>
         </exec>
+    </target>
+
+    <target name="phpstan" depends="init"
+            description="Проверка исходного кода на наличие ошибок">
+        <exec passthru="true"
+              checkreturn="${build.strict}"
+              executable="${build.bin}/phpstan">
+            <arg line="analyse"/>
+            <arg line="${build.argsSpace}"/>
+        </exec>
+
     </target>
 
     <target name="test" depends="init"
