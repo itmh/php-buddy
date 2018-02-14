@@ -13,6 +13,7 @@
 * https://github.com/itmh/coding-standard-php
 * https://github.com/itmh/cyclophp
 * https://github.com/mayflower/PHP_CodeBrowser
+* https://github.com/phpstan/phpstan
 
 ### Установка
 
